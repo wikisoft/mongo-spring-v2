@@ -31,6 +31,9 @@ public class TaskService {
     }
 
     public List<Task> findAllOrderByTitleAsc() {
+	Task t = new Task();
+	t.setDescription("tes");
+	t.setTitle("hghgd");
 	return Lists.newArrayList(taskRepository.findAllByOrderByTitleAsc());
     }
 
