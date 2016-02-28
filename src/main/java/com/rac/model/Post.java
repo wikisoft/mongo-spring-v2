@@ -1,5 +1,6 @@
 package com.rac.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -59,6 +60,9 @@ public class Post {
     }
 
     public List<Comment> getComments() {
+	if (comments == null) {
+	    return new ArrayList<Comment>();
+	}
 	return comments;
     }
 
@@ -72,6 +76,13 @@ public class Post {
 
     public void setUpvotes(int upvotes) {
 	this.upvotes = upvotes;
+    }
+
+    @Override
+    public String toString() {
+	return "Post [id=" + id + ", title=" + title + ", body=" + body
+		+ ", author=" + author + ", comments=" + comments
+		+ ", upvotes=" + upvotes + "]";
     }
 
 }

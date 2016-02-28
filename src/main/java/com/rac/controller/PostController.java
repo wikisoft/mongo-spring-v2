@@ -1,5 +1,6 @@
 package com.rac.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class PostController {
 	return postService.getPosts().size();
     }
 
-    @RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
     public @ResponseBody Post getPost(@PathVariable("id") final String id) {
 	return postService.getPost(id);
     }
@@ -42,8 +43,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/upvotePost/{up}", method = RequestMethod.POST)
-    public @ResponseBody List<Post> upvotePost(@RequestBody final Post post, @PathVariable("up") final boolean isUP) {
-	System.err.println(post.getId());
+    public @ResponseBody List<Post> upvotePost(@RequestBody final Post post,
+	    @PathVariable("up") final boolean isUP) {
 	if (isUP) {
 	    post.setUpvotes(post.getUpvotes() + 1);
 	} else {
@@ -69,19 +70,23 @@ public class PostController {
 	return postService.getComment(id);
     }
 
-    @RequestMapping(value = "/comments", method = RequestMethod.GET)
-    public @ResponseBody List<Comment> getCommentList() {
-	return postService.getComments();
+    @RequestMapping(value = "/comments/{postId}", method = RequestMethod.GET)
+    public @ResponseBody List<Comment> getCommentList(
+	    @PathVariable("postId") final String postId) {
+	return postService.findCommentByPostId(postService.getPost(postId));
     }
 
     @RequestMapping(value = "/saveComment", method = RequestMethod.POST)
-    public @ResponseBody List<Comment> saveComment(@RequestBody final Comment comment) {
+    public @ResponseBody List<Comment> saveComment(
+	    @RequestBody final Comment comment) {
+	comment.setDate(new Date());
 	postService.save(comment);
-	return postService.getComments();
+	return postService.findCommentByPostId(comment.getPost());
     }
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
-    public @ResponseBody List<Comment> deleteComment(@RequestBody final Comment comment) {
+    public @ResponseBody List<Comment> deleteComment(
+	    @RequestBody final Comment comment) {
 	postService.deleteComment(comment);
 	return postService.getComments();
     }
@@ -98,13 +103,15 @@ public class PostController {
     }
 
     @RequestMapping(value = "/saveAuthor", method = RequestMethod.POST)
-    public @ResponseBody List<Author> saveAuthor(@RequestBody final Author author) {
+    public @ResponseBody List<Author> saveAuthor(
+	    @RequestBody final Author author) {
 	postService.save(author);
 	return postService.getAuthors();
     }
 
     @RequestMapping(value = "/deleteAuthor", method = RequestMethod.POST)
-    public @ResponseBody List<Author> deleteAuthor(@RequestBody final Author author) {
+    public @ResponseBody List<Author> deleteAuthor(
+	    @RequestBody final Author author) {
 	postService.deleteAuthor(author);
 	return postService.getAuthors();
     }

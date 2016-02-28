@@ -1,5 +1,7 @@
 package com.rac.model;
 
+import java.util.Date;
+
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class Comment {
@@ -8,8 +10,12 @@ public class Comment {
 
     private String comment;
 
+    private int rating;
+
+    private Date date;
+
     @DBRef
-    private Author author;
+    private Post post;
 
     public String getId() {
 	return id;
@@ -27,12 +33,34 @@ public class Comment {
 	this.comment = comment;
     }
 
-    public Author getAuthor() {
-	return author;
+    public Date getDate() {
+	return date;
     }
 
-    public void setAuthor(Author author) {
-	this.author = author;
+    public void setDate(Date date) {
+	this.date = date;
+    }
+
+    public int getRating() {
+	return rating;
+    }
+
+    public void setRating(int rating) {
+	this.rating = rating;
+    }
+
+    public Post getPost() {
+	return post;
+    }
+
+    public void setPost(Post post) {
+	this.post = post;
+    }
+
+    @Override
+    public String toString() {
+	return "Comment [id=" + id + ", comment=" + comment + ", rating="
+		+ rating + ", date=" + date + "]";
     }
 
 }
