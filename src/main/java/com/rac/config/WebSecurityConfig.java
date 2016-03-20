@@ -38,19 +38,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-	http.httpBasic().and().authorizeRequests()
-		.antMatchers("/index.html", "/views/home.html", "/views/post.html", "/views/login.html", "/css/*",
-			"/user", "/js/*", "/lib/*", "/fonts/*", "/*")
-		.permitAll().anyRequest().authenticated().and().csrf().csrfTokenRepository(csrfTokenRepository()).and()
-		.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+	// http.httpBasic().and().authorizeRequests()
+	// .antMatchers("/index.html", "/views/home.html", "/views/post.html",
+	// "/views/login.html", "/css/*",
+	// "/user", "/js/*", "/lib/*", "/fonts/*", "/*")
+	// .permitAll().anyRequest().authenticated().and().csrf().csrfTokenRepository(csrfTokenRepository()).and()
+	// .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 
 	// .and().formLogin().loginPage("/login").permitAll()
+	// antMatchers("/**").permitAll().
 
-	// http.httpBasic().and().authorizeRequests().antMatchers("/index.html",
-	// "/rest/**", "/views/**").permitAll()
-	// .anyRequest().authenticated().antMatchers("/**").permitAll().and().formLogin()
-	// .loginPage("/views/login.html").permitAll().and().csrf().csrfTokenRepository(csrfTokenRepository())
-	// .and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
+	http.httpBasic();
+	http.authorizeRequests().antMatchers("/static/**").permitAll()
+		.antMatchers("/front/**", "/rest/**").authenticated().and()
+		.formLogin().loginPage("/#/front/login").permitAll().and()
+		.csrf().csrfTokenRepository(csrfTokenRepository()).and()
+		.addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 
 	// http.authorizeRequests().antMatchers("/**").authenticated().and().csrf()
 	// .csrfTokenRepository(csrfTokenRepository()).and().addFilterAfter(csrfHeaderFilter(),
@@ -60,13 +63,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private Filter csrfHeaderFilter() {
 	return new OncePerRequestFilter() {
 	    @Override
-	    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-		    FilterChain filterChain) throws ServletException, IOException {
-		CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+	    protected void doFilterInternal(HttpServletRequest request,
+		    HttpServletResponse response, FilterChain filterChain)
+		    throws ServletException, IOException {
+		CsrfToken csrf = (CsrfToken) request
+			.getAttribute(CsrfToken.class.getName());
 		if (csrf != null) {
 		    Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
 		    String token = csrf.getToken();
-		    if (cookie == null || token != null && !token.equals(cookie.getValue())) {
+		    if (cookie == null || token != null
+			    && !token.equals(cookie.getValue())) {
 			cookie = new Cookie("XSRF-TOKEN", token);
 			cookie.setPath("/");
 			response.addCookie(cookie);
@@ -84,8 +90,45 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	auth.inMemoryAuthentication().withUser("user").password("password").roles("USER").and().withUser("admin")
-		.password("password").roles("ADMIN");
+    public void configureGlobal(AuthenticationManagerBuilder auth)
+	    throws Exception {
+	auth.inMemoryAuthentication().withUser("user").password("user")
+		.roles("USER").and().withUser("admin").password("admin")
+		.roles("ADMIN");
     }
 }
+
+// @Configuration
+// class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
+// {
+//
+// @Autowired
+// private UserRepository accountRepository;
+//
+// @Override
+// public void init(AuthenticationManagerBuilder auth) throws Exception {
+// auth.userDetailsService(userDetailsService());
+// }
+//
+// @Bean
+// UserDetailsService userDetailsService() {
+// return new UserDetailsService() {
+//
+// @Override
+// public UserDetails loadUserByUsername(String username)
+// throws UsernameNotFoundException {
+// User account = accountRepository.findByUsername(username);
+// if (account != null) {
+// return new org.springframework.security.core.userdetails.User(
+// account.getUsername(), account.getPassword(), true,
+// true, true, true,
+// AuthorityUtils.createAuthorityList("USER"));
+// } else {
+// throw new UsernameNotFoundException(
+// "could not find the user '" + username + "'");
+// }
+// }
+//
+// };
+// }
+// }

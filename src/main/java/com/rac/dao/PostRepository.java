@@ -9,8 +9,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.rac.model.Post;
 
-@RepositoryRestResource(collectionResourceRel = "postRepo", path = "postRepo")
-// @PreAuthorize("hasRole('ROLE_ADMIN')")
+@RepositoryRestResource
 public interface PostRepository extends MongoRepository<Post, String> {
 
     @Query("{ 'title' : ?0 }")

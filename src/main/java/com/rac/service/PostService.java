@@ -1,8 +1,11 @@
 package com.rac.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.rac.dao.AuthorRepository;
@@ -23,6 +26,9 @@ public class PostService {
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Value("custom.myValue")
+    private String customValue;
 
     // posts
     public List<Post> getPosts() {
@@ -49,10 +55,6 @@ public class PostService {
     public List<Comment> getComments() {
 	return commentRepository.findAll();
     }
-
-    // public List<Comment> findCommentByPostId(Post post) {
-    // return commentRepository.findCommentByPostId(post.getId());
-    // }
 
     public Comment getComment(final String id) {
 	return commentRepository.findOne(id);
@@ -89,6 +91,16 @@ public class PostService {
 
     public void deleteAuthor(final Author author) {
 	authorRepository.delete(author);
+    }
+
+    public String convertDate(Date date) {
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+	return dateFormat.format(date);
+    }
+
+    public String newValue() {
+
+	return "value";
     }
 
 }

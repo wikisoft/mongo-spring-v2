@@ -16,10 +16,10 @@
 				<tr ng-repeat="post in posts | orderBy:'-upvotes'">
 					<!-- 							<td>{{ post.id }}</td> -->
 					<td>
-						<a href="#/{{post.id}}"> {{ post.title }}</a>
+						<a href="#/front/post/{{post.id}}"> {{ post.title }}</a>
 					</td>
 					<td width="70%">
-						<a href="#/{{post.id}}"> {{ post.body | limitTo : 75 }}...</a>
+						<a href="#/front/post/{{post.id}}"> {{ post.body | limitTo : 75 }}...</a>
 					</td>
 					<td>{{ post.author.name }}</td>
 					<td nowrap=nowrap align="right">

@@ -45,7 +45,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/upvotePost/{up}", method = RequestMethod.POST)
-    public @ResponseBody List<Post> upvotePost(@RequestBody final Post post, @PathVariable("up") final boolean isUP) {
+    public @ResponseBody List<Post> upvotePost(@RequestBody final Post post,
+	    @PathVariable("up") final boolean isUP) {
 	if (isUP) {
 	    post.setUpvotes(post.getUpvotes() + 1);
 	} else {
@@ -95,7 +96,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
-    public @ResponseBody List<Comment> deleteComment(@RequestBody final Comment comment) {
+    public @ResponseBody List<Comment> deleteComment(
+	    @RequestBody final Comment comment) {
 	postService.deleteComment(comment);
 	return postService.getComments();
     }
@@ -103,7 +105,8 @@ public class PostController {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/upvoteComment/{isUp}/{postId}", method = RequestMethod.POST)
     public @ResponseBody Post upvoteComment(@RequestBody final Comment comment,
-	    @PathVariable("isUp") final boolean isUP, @PathVariable("postId") final String postId) {
+	    @PathVariable("isUp") final boolean isUP,
+	    @PathVariable("postId") final String postId) {
 	if (isUP) {
 	    comment.setUpvotes(comment.getUpvotes() + 1);
 	} else {
@@ -112,7 +115,7 @@ public class PostController {
 	postService.save(comment);
 	// return postService.findCommentByPostId(comment.getPost());
 
-	//// TODO reload instead of returning post or comments
+	// // TODO reload instead of returning post or comments
 	return postService.getPost(postId);
     }
 
@@ -128,15 +131,23 @@ public class PostController {
     }
 
     @RequestMapping(value = "/saveAuthor", method = RequestMethod.POST)
-    public @ResponseBody List<Author> saveAuthor(@RequestBody final Author author) {
+    public @ResponseBody List<Author> saveAuthor(
+	    @RequestBody final Author author) {
 	postService.save(author);
 	return postService.getAuthors();
     }
 
     @RequestMapping(value = "/deleteAuthor", method = RequestMethod.POST)
-    public @ResponseBody List<Author> deleteAuthor(@RequestBody final Author author) {
+    public @ResponseBody List<Author> deleteAuthor(
+	    @RequestBody final Author author) {
 	postService.deleteAuthor(author);
 	return postService.getAuthors();
+    }
+
+    @RequestMapping(value = "/getEnv", method = RequestMethod.POST)
+    public @ResponseBody String getEnv() {
+
+	return "";
     }
 
 }

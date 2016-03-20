@@ -2,22 +2,22 @@ package com.rac;
 
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.rac.config.AppConfig;
 import com.rac.dao.AuthorRepository;
 import com.rac.dao.CommentRepository;
 import com.rac.dao.PostRepository;
 import com.rac.dao.UserRepository;
+import com.rac.model.Author;
 import com.rac.model.Comment;
 import com.rac.model.Post;
 
-@SpringApplicationConfiguration(classes = AppConfig.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@IntegrationTest("spring.data.mongodb.uri=mongodb://localhost:12345/test")
+//@EnableAutoConfiguration(exclude = { EmbeddedMongoAutoConfiguration.class })
 public class TestDao {
 
     @Autowired
@@ -31,6 +31,21 @@ public class TestDao {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Test
+    public void testAuthorDao() {
+	Author author = new Author();
+	author.setName("rac");
+	author.setDescription("desc");
+	Author authorCreated = authorRepository.save(author);
+	Assert.assertEquals(authorCreated.getName(), author.getName());
+
+	Author findAuthor = authorRepository.findOne(authorCreated.getId());
+	Assert.assertEquals(authorCreated.getName(), findAuthor.getName());
+
+	authorRepository.delete(findAuthor);
+	Assert.assertEquals(authorRepository.findAll().size(), 0);
+    }
 
     @Test
     public void getAll() {

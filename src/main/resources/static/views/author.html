@@ -1,0 +1,71 @@
+<div class="container" ng-show="authenticated">
+	<div class="row">
+		<div class="col-xs-12 col-sm-9">
+			<ul class="breadcrumb">
+				<li class="active">
+					<a href="#">News</a>
+				</li>
+				<li class="active">Authors</li>
+			</ul>
+		</div>
+	</div>
+
+
+	<div class="row row-content">
+		<div class="col-xs-12 col-sm-9">
+
+			<form class="form-horizontal" role="form">
+
+				<div class=" form-group">
+					<div class=col-sm-12>
+						<input type="hidden" ng-model="author.id">
+						<input type="text" name="name" class="form-control"
+							placeholder="Name" ng-model="author.name">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-12">
+						<textarea class="form-control" name="description" rows="4"
+							ng-model="author.description" placeholder="Who I'm"></textarea>
+					</div>
+				</div>
+				<div align="right" class="col-sm-12 pull-right form-group">
+					<button class="btn btn-primary" style="width: 120px"
+						ng-click="saveAuthor()">Save</button>
+					<button class="btn btn-danger" style="width: 120px"
+						ng-click="clear()">Clear</button>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-striped">
+						<thead>
+							<tr>
+								<th width="50%">#</th>
+								<th>Name</th>
+								<!-- 									<th>Desc</th> -->
+								<th width="10%"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="author in authors">
+								<td>{{ author.id }}</td>
+								<td>{{ author.name }}</td>
+								<!-- 									<td>{{ author.description }}</td> -->
+								<td nowrap=nowrap align="center">
+									<i ng-click="editAuthor(author)" style="color: blue"
+										class="fa fa-lg fa-pencil-square-o"></i>
+									<i ng-click="deleteAuthor(author)" style="color: blue"
+										class="fa fa-lg fa-trash-o"></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+</div>

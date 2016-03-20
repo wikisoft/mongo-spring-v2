@@ -17,5 +17,14 @@ logging:
     org.springframework.security: DEBUG
     
 management:
+  security:
+    enabled: false
   context-path: /manage
-  port: 8099 
+  port: 8099
+  
+info:
+  app:
+    name: customInfo
+    description: Custom Info
+    version: 1.0.0 
+    

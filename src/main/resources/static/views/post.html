@@ -28,7 +28,7 @@
 
 				<b>
 					<small>Sort by:</small>
-					<select class="form-control input-xs" ng-model="orderAttr" ng-options="data for data in orderBy">
+					<select class="form-control input-xs" ng-model="orderAttr" ng-options="data for data in orderBy" ng-change="reverseSort()" >
 					</select>
 					<input ng-show="orderBy.indexOf(orderAttr)!=-1" type="checkbox" ng-model="isReverse" ng-change="reverseSort()" />
 				</b>

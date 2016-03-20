@@ -13,25 +13,33 @@
 <link rel="stylesheet" href="resources/lib/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="resources/lib/bootstrap-select.min.css" />
 <link rel="stylesheet" href="resources/lib/font-awesome.min.css" />
-<link rel="stylesheet" href="resources/lib/angular-ui-notification.min.css">
+<link rel="stylesheet"
+	href="resources/lib/angular-ui-notification.min.css">
 <link rel="stylesheet" href="resources/css/style.css">
 <!--   <link href="assets/css/footable.core.min.css" rel="stylesheet"/> -->
 
 <!-- Bootstrap core JavaScript ================================================== -->
 <script type="text/javascript" src="resources/lib/jquery.min.js"></script>
 <script type="text/javascript" src="resources/lib/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/lib/bootstrap-select.min.js"></script>
+<script type="text/javascript"
+	src="resources/lib/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="resources/lib/footable.js"></script>
 <!-- angular js -->
 <script type="text/javascript" src="resources/lib/angular.min.js"></script>
-<script type="text/javascript" src="resources/lib/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript"
+	src="resources/lib/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="resources/lib/angular-route.min.js"></script>
-<script type="text/javascript" src="resources/lib/angular-translate.min.js"></script>
+<script type="text/javascript"
+	src="resources/lib/angular-translate.min.js"></script>
 <script type="text/javascript" src="resources/lib/angular-base64.min.js"></script>
-<script type="text/javascript" src="resources/lib/angular-ui-notification.min.js"></script>
-<script type="text/javascript" src="resources/lib/angular-ui-router.min.js"></script>
-<script type="text/javascript" src="resources/lib/angular-resource.min.js"></script>
-<script type="text/javascript" src="resources/lib/angular-cookies.min.js"></script>
+<script type="text/javascript"
+	src="resources/lib/angular-ui-notification.min.js"></script>
+<script type="text/javascript"
+	src="resources/lib/angular-ui-router.min.js"></script>
+<script type="text/javascript"
+	src="resources/lib/angular-resource.min.js"></script>
+<script type="text/javascript"
+	src="resources/lib/angular-cookies.min.js"></script>
 <script type="text/javascript" src="resources/js/app.js"></script>
 
 <style>
@@ -49,11 +57,17 @@
 	<div ng-controller="Navigation" class="container">
 		<div class="col-xs-12 col-sm-9">
 			<div class="row">
-				<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-					<ul class="nav navbar-right navbar-top-links" ng-show="authenticated" >
-						<li>{{userName}} |</li>
+				<nav class="navbar navbar-static-top" role="navigation"
+					style="margin-bottom: 0">
+					<ul class="nav navbar-right navbar-top-links"
+						ng-show="authenticated">
+						<li>Hello {{userName}}</li>
+						<li ng-show="isAdmin">
+							<a href="#/front/authors">| Manage Authors</a>
+						</li>
 						<li>
 							<a href="#" ng-click="logout()">
+								|
 								<i class="fa fa-sign-out"></i>
 								Log out
 							</a>

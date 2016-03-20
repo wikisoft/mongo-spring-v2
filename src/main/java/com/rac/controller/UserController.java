@@ -1,5 +1,7 @@
 package com.rac.controller;
 
+import java.security.Principal;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +15,8 @@ public class UserController {
     public UserDetails user() {
 
 	UserDetails user = null;
-	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	Authentication auth = SecurityContextHolder.getContext()
+		.getAuthentication();
 	if (auth != null) {
 	    Object principal = auth.getPrincipal();
 	    if (principal instanceof UserDetails) {
@@ -21,6 +24,11 @@ public class UserController {
 	    }
 	}
 
+	return user;
+    }
+
+    // @RequestMapping("/user")
+    public Principal user(Principal user) {
 	return user;
     }
 }
